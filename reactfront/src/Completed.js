@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const TodoList = () => {
+const Completed = () => {
   // State to store the todo list
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState(""); // State to store the new todo input
@@ -10,7 +10,7 @@ const TodoList = () => {
   // Function to fetch todo list from the server
   const fetchTodoList = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/todos-undone");
+      const response = await axios.get("http://localhost:5000/todos-done");
       setTodos(response.data);
     } catch (error) {
       console.error("Error fetching todo list:", error);
@@ -30,14 +30,13 @@ const TodoList = () => {
     }
   };
 
-  // Function to handle marking a todo as completed
-  const handleCompleted = async (action) => {
+  // Function to handle deletion of a todo
+  const handleDelete = async (action) => {
     try {
-      // Send a request to mark the todo as completed
-      await axios.post(`http://localhost:5000/todo-complete/${action}`);
-      fetchTodoList(); // Fetch updated todo list
+      await axios.delete(`http://localhost:5000/todos/${action}`);
+      fetchTodoList();
     } catch (error) {
-      console.error("Error marking todo as completed:", error);
+      console.error("Error deleting todo:", error);
     }
   };
 
@@ -52,33 +51,20 @@ const TodoList = () => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title mb-4">Awesome Todo List</h5>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="What do you need to do today?"
-                    value={newTodo}
-                    onChange={(e) => setNewTodo(e.target.value)}
-                  />
-                </div>
-                <button type="submit" className="btn btn-primary">
-                  Add
-                </button>
-              </form>
+              <h5 className="card-title mb-4">Completed tasks</h5>
               <ul className="list-group mt-4">
                 {todos.map((todo) => (
                   <li
                     key={todo.action}
                     className="list-group-item d-flex justify-content-between align-items-center"
+                    style={{ textDecoration: "line-through" }}
                   >
                     {todo.action}
                     <button
-                      className="btn btn-sm btn-success"
-                      onClick={() => handleCompleted(todo.action)}
+                      className="btn btn-sm btn-danger"
+                      onClick={() => handleDelete(todo.action)} // Pass todo id to handleDelete function
                     >
-                      <i className="bi bi-check"></i>
+                      <i className="bi bi-trash"></i>
                     </button>
                   </li>
                 ))}
@@ -88,8 +74,7 @@ const TodoList = () => {
         </div>
       </div>
     </div>
-    
   );
 };
 
-export default TodoList;
+export default Completed;
