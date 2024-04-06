@@ -1,0 +1,17 @@
+/* AddTodo.css */
+.container {
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  margin-right: 10px;
+  border-radius: 2px;
+}
+
+button {
+  padding: 5px 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}

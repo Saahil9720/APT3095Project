@@ -1,5 +1,6 @@
 // AddTodo.js
 import React, { useState } from "react";
+import "./AddTodo.css"; // Import the CSS file
 
 const AddTodo = ({ onAdd }) => {
   const [text, setText] = useState("");
@@ -12,7 +13,9 @@ const AddTodo = ({ onAdd }) => {
   };
 
   return (
-    <div>
+    <div className="container">
+      {" "}
+      {/* Use className instead of style */}
       <h2>Add New To-Do</h2>
       <form onSubmit={handleSubmit}>
         <input

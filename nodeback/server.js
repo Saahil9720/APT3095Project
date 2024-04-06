@@ -1,12 +1,16 @@
 // Import express module
 const express = require("express");
-
+const cors = require("cors");
 // Create an express application
 const app = express();
-
 // Define the port number
 const port = 3000;
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 // Dummy data for to-do items
 let todos = [
   { id: 1, text: "Learn Node.js" },

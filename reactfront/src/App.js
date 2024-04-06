@@ -3,6 +3,7 @@ import TodoList from "./TodoList";
 import AddTodo from "./AddTodo";
 import "./App.css";
 import DeleteTodo from "./DeleteTodo";
+import EditTodo from "./EditTodo";
 
 function App() {
   const [todos, setTodos] = useState([]);
