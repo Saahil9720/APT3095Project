@@ -3,8 +3,11 @@ const express = require("express");
 const cors = require("cors");
 // Create an express application
 const app = express();
+const sql = require(
+  'mssql'
+);
 // Define the port number
-const port = 3000;
+const port = 5000;
 
 app.use(
   cors({
@@ -20,38 +23,61 @@ let todos = [
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Route to get all to-do items
-app.get("/todos", (req, res) => {
-  res.json(todos);
-});
+const config = {
+  user: "nayanasaahil",
+  password: "Sn@663157",
+  server: "nayanasaahilserver.database.windows.net",
+  database: "nayanasaahildb",
+  authentication: {
+    type: "default",
+  },
+  options: {
+    encrypt: true,
+  },
+};
 
-// Route to add a new to-do item
-app.post("/todos", (req, res) => {
-  const { text } = req.body;
-  const newTodo = { id: todos.length + 1, text };
-  todos.push(newTodo);
-  res.status(201).json(newTodo);
-});
+console.log("Starting...");
+connectAndQuery();
 
-// Route to update an existing to-do item
-app.put("/todos/:id", (req, res) => {
-  const { id } = req.params;
-  const { text } = req.body;
-  const todoIndex = todos.findIndex((todo) => todo.id === parseInt(id));
-  if (todoIndex !== -1) {
-    todos[todoIndex].text = text;
-    res.json(todos[todoIndex]);
-  } else {
-    res.status(404).json({ error: "To-do item not found" });
+async function connectAndQuery() {
+  try {
+    var poolConnection = await sql.connect(config);
+
+    console.log("done connecting");
+
+    await createTable(poolConnection);
+    console.log("table probably created- check")
+  } catch (err) {
+    console.error(err.message);
   }
+}
+
+app.get("/", (req, res) => {
+  console.log("started");
 });
 
-// Route to delete a to-do item
-app.delete("/todos/:id", (req, res) => {
-  const { id } = req.params;
-  todos = todos.filter((todo) => todo.id !== parseInt(id));
-  res.sendStatus(204);
-});
+async function createTable(poolConnection) {
+  // Accept poolConnection as a parameter
+  try {
+    const request = poolConnection.request();
+
+    // SQL query to create a table
+    const query = `
+      CREATE TABLE Todos (
+        id INT PRIMARY KEY,
+        text NVARCHAR(255)
+      )
+    `;
+
+    // Execute the query
+    await request.query(query);
+
+    console.log("Table created successfully");
+  } catch (err) {
+    console.error("Error creating table:", err.message);
+  }
+}
+
 
 // Make the app listen on the specified port
 app.listen(port, () => {
