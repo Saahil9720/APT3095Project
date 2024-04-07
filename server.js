@@ -7,8 +7,7 @@ const sql = require("mssql");
 const bodyParser = require("body-parser");
 
 // Define the port number
-const port = "https://nayanasaahilwebapp.azurewebsites.net/";
-const path = require("path");
+const port = 5000;
 
 app.use(bodyParser.json());
 app.use(
@@ -137,11 +136,6 @@ app.put("todo-edit/:action", async (req, res) => {});
 
 app.get("/", (req, res) => {
   console.log("started");
-});
-
-app.use(express.static("./reactfront/build"));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "reactfront", "build", "index.html"));
 });
 
 // Make the app listen on the specified port
