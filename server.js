@@ -3,13 +3,12 @@ const express = require("express");
 const cors = require("cors");
 // Create an express application
 const app = express();
-const sql = require(
-  'mssql'
-);
-const bodyParser = require('body-parser');
+const sql = require("mssql");
+const bodyParser = require("body-parser");
 
 // Define the port number
 const port = 5000;
+const path = require("path");
 
 app.use(bodyParser.json());
 app.use(
@@ -77,7 +76,9 @@ app.post("/todos", async (req, res) => {
 app.get("/todos-undone", async (req, res) => {
   try {
     var poolConnection = await sql.connect(config);
-    const result = await poolConnection.request().query("SELECT * FROM Todos WHERE done = 0"); // Assuming 'Todos' is your table name
+    const result = await poolConnection
+      .request()
+      .query("SELECT * FROM Todos WHERE done = 0"); // Assuming 'Todos' is your table name
     res.json(result.recordset); // Send the queried data as JSON response
   } catch (err) {
     console.error("Error retrieving todos:", err);
@@ -87,13 +88,15 @@ app.get("/todos-undone", async (req, res) => {
 app.get("/todos-done", async (req, res) => {
   try {
     var poolConnection = await sql.connect(config);
-    const result = await poolConnection.request().query("SELECT * FROM Todos WHERE done = 1"); // Assuming 'Todos' is your table name
+    const result = await poolConnection
+      .request()
+      .query("SELECT * FROM Todos WHERE done = 1"); // Assuming 'Todos' is your table name
     res.json(result.recordset); // Send the queried data as JSON response
   } catch (err) {
     console.error("Error retrieving todos:", err);
     res.status(500).send("Error retrieving todos");
   }
-})
+});
 
 app.delete("/todos/:action", async (req, res) => {
   const action = req.params.action; // Get todo ID from request parameters
@@ -129,13 +132,15 @@ app.post("/todo-complete/:action", async (req, res) => {
   }
 });
 
-app.put("todo-edit/:action", async (req, res) => {
-
-});
-
+app.put("todo-edit/:action", async (req, res) => {});
 
 app.get("/", (req, res) => {
   console.log("started");
+});
+
+app.use(express.static("./reactfront/build"));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "reactfront", "build", "index.html"));
 });
 
 // Make the app listen on the specified port
