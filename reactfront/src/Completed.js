@@ -17,18 +17,6 @@ const Completed = () => {
     }
   };
 
-  // Function to handle form submission
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      await axios.post("http://localhost:5000/todos", { action: newTodo });
-      fetchTodoList();
-      setNewTodo("");
-    } catch (error) {
-      console.error("Error adding todo:", error);
-    }
-  };
 
   // Function to handle deletion of a todo
   const handleDelete = async (action) => {
