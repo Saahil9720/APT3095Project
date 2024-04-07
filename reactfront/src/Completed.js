@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap-icons/font/bootstrap-icons.css";
+import * as Icon from "react-bootstrap-icons";
 
 const Completed = () => {
   // State to store the todo list
@@ -24,7 +26,7 @@ const Completed = () => {
     try {
       await axios.post("http://localhost:5000/todos", { action: newTodo });
       fetchTodoList();
-      setNewTodo("");
+      setNewTodo(""); // Clear input field after submitting
     } catch (error) {
       console.error("Error adding todo:", error);
     }
@@ -43,7 +45,7 @@ const Completed = () => {
   // useEffect hook to fetch todo list when component mounts
   useEffect(() => {
     fetchTodoList();
-  }, []);
+  }, []); // Empty dependency array ensures this effect runs only once after initial render
 
   return (
     <div className="container">
@@ -64,7 +66,8 @@ const Completed = () => {
                       className="btn btn-sm btn-danger"
                       onClick={() => handleDelete(todo.action)} // Pass todo id to handleDelete function
                     >
-                      <i className="bi bi-trash"></i>
+                      <Icon.Trash/>{" "}
+                      {/* Use proper bootstrap icon class */}
                     </button>
                   </li>
                 ))}

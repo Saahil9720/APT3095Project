@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap-icons/font/bootstrap-icons.css";
+import * as Icon from "react-bootstrap-icons";
 
 const TodoList = () => {
   // State to store the todo list
@@ -24,7 +26,7 @@ const TodoList = () => {
     try {
       await axios.post("http://localhost:5000/todos", { action: newTodo });
       fetchTodoList();
-      setNewTodo("");
+      setNewTodo(""); // Clear input field after submitting
     } catch (error) {
       console.error("Error adding todo:", error);
     }
@@ -84,7 +86,8 @@ const TodoList = () => {
                       className="btn btn-sm btn-success"
                       onClick={() => handleCompleted(todo.action)}
                     >
-                      <i className="bi bi-check"></i>
+                      <Icon.Check2/>{" "}
+                      {/* Use proper bootstrap icon class */}
                     </button>
                   </li>
                 ))}
