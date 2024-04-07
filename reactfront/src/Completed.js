@@ -10,9 +10,7 @@ const Completed = () => {
   // Function to fetch todo list from the server
   const fetchTodoList = async () => {
     try {
-      const response = await axios.get(
-        "https://nayanasaahilwebapp.azurewebsites.net/todos-done"
-      );
+      const response = await axios.get("http://localhost:5000/todos-done");
       setTodos(response.data);
     } catch (error) {
       console.error("Error fetching todo list:", error);
@@ -24,7 +22,7 @@ const Completed = () => {
     event.preventDefault();
 
     try {
-      await axios.post("https://nayanasaahilwebapp.azurewebsites.net/todos", {
+      await axios.post("http://localhost:5000/todos", {
         action: newTodo,
       });
       fetchTodoList();
@@ -37,9 +35,7 @@ const Completed = () => {
   // Function to handle deletion of a todo
   const handleDelete = async (action) => {
     try {
-      await axios.delete(
-        `https://nayanasaahilwebapp.azurewebsites.net/todos/${action}`
-      );
+      await axios.delete(`http://localhost:5000/todos/${action}`);
       fetchTodoList();
     } catch (error) {
       console.error("Error deleting todo:", error);

@@ -10,9 +10,7 @@ const TodoList = () => {
   // Function to fetch todo list from the server
   const fetchTodoList = async () => {
     try {
-      const response = await axios.get(
-        "https://nayanasaahilwebapp.azurewebsites.net/todos-undone"
-      );
+      const response = await axios.get("http://localhost:5000/todos-undone");
       setTodos(response.data);
     } catch (error) {
       console.error("Error fetching todo list:", error);
@@ -24,7 +22,7 @@ const TodoList = () => {
     event.preventDefault();
 
     try {
-      await axios.post("https://nayanasaahilwebapp.azurewebsites.net/todos", {
+      await axios.post("http://localhost:5000/todos", {
         action: newTodo,
       });
       fetchTodoList();
@@ -38,9 +36,7 @@ const TodoList = () => {
   const handleCompleted = async (action) => {
     try {
       // Send a request to mark the todo as completed
-      await axios.post(
-        `https://nayanasaahilwebapp.azurewebsites.net/todo-complete/${action}`
-      );
+      await axios.post(`http://localhost:5000/todo-complete/${action}`);
       fetchTodoList(); // Fetch updated todo list
     } catch (error) {
       console.error("Error marking todo as completed:", error);
