@@ -12,9 +12,10 @@ const path = require("path");
 
 app.use(bodyParser.json());
 app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
+  cors
+  // cors({
+  //   origin: "http://localhost:3000",
+  // })
 );
 // Middleware to parse JSON bodies
 app.use(express.json());
