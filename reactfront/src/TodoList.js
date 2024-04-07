@@ -52,7 +52,7 @@ const TodoList = () => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title mb-4">Awesome Todo List</h5>
+              <h5 className="card-title mb-4">Add a Task</h5>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <input
@@ -67,6 +67,12 @@ const TodoList = () => {
                   Add
                 </button>
               </form>
+            </div>
+          </div>
+          <br></br>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title mb-4">My To-do List</h5>
               <ul className="list-group mt-4">
                 {todos.map((todo) => (
                   <li
@@ -88,7 +94,6 @@ const TodoList = () => {
         </div>
       </div>
     </div>
-    
   );
 };
 

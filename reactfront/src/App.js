@@ -12,16 +12,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>To-do list</h1>
-        <h2>By Nayana Das and Saahil Vekariya</h2>
+        <h1>TO-DO LIST ✔</h1>
+        <h3>Nayana & Saahil</h3>
       </header>
       <main>
         <TodoList />
-        <Completed/>
+        <Completed />
       </main>
 
       <footer className="footer">
-        <p>&copy; 2024 Todo App. All rights reserved.</p>
+        <p>&copy; Spring 2024 Nayana Das | Saahil Vekariya for APT3095.</p>
       </footer>
     </div>
   );
